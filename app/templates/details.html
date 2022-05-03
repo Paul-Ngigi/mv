@@ -1,0 +1,58 @@
+{% extends 'base.html'%}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+<div class="container text-center">
+    <!-- Movie Details -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h2>Movie Details</h2>
+            <hr>
+        </div>
+        <div class="col-md-12 text-center">
+            {% for movie in movie %}
+            <h3>Title: {{movie.title}}</h3>
+            <p>{{movie.description}}</p>
+            <p>The movie is expected to be watched on {{movie.date.strftime('%Y-%m-%d')}} at
+                {{movie.date.strftime('%H:%M:%S')}}</p>
+            <p>Movie tickets cost ${{movie.price}}</p>
+            <p>Auditorium: {{auditorium[0].name}}</p>
+            <p>Capacity: {{auditorium[0].CustomerCapacity}}</p>
+            <div class="row">
+                <div class="col-md-12">
+                    {{ order_form.hidden_tag() }}
+                    {{ wtf.quick_form(order_form) }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Table for customers -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Customer Id</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Tickets Ordered</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr>
+                <th scope="row">{{foo(ticket.customer_id)._id}}</th>
+                <td>{{foo(ticket.customer_id).firstName}}</td>
+                <td>{{foo(ticket.customer_id).lastName}}</td>
+                <td>{{foo(ticket.customer_id).email}}</td>
+                <td>{{foo(ticket.customer_id).phone}}</td> 
+                <td>{{ticket.no_of_tickets}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}
